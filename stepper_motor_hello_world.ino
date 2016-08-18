@@ -19,8 +19,10 @@ int dir = HIGH;
 float rps = 0.5; // seconds per revolution
 long delay_per_step; // delay per step, us
 
-void rotate_stepper()
+void rotate_stepper(int dir)
 {
+  digitalWrite(motorDirPin, dir);
+  
   for (int i=0; i<5; i++) {
     digitalWrite(MS1, step_table[i*3 + 0]);
     digitalWrite(MS2, step_table[i*3 + 1]);
@@ -65,13 +67,12 @@ void setup(void)
 
 void loop(void)
 {
-  rotate_stepper();
+  rotate_stepper(dir);
   // change direction
   if (dir == HIGH) { 
     dir = LOW; 
   } else { 
     dir = HIGH;
   }
-  digitalWrite(motorDirPin, dir);
   delay(2000);
 }
